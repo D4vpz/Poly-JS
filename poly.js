@@ -11,7 +11,7 @@ let ctx = null;
  */
 const set_main_window = (window_object) => {
   win_obj = window_object;
-  ctx = win_obj.getContext("2d");
+  ctx = win_obj.getContext('2d');
 };
 
 /**
@@ -29,13 +29,23 @@ const set_window_size = (width, height) => {
  * @param {Number} width
  * @param {Number} radius
  * @param {String} color
+ * @param {String} image_rendering
  */
-const set_window_border = (width, radius, color) => {
+const set_window_style = (width, radius, color, image_rendering="pixelated") => {
   win_obj.style = `
   border: ${width}px solid ${color};
   border-radius: ${radius}px;
+  image-rendering: ${image_rendering};
   `;
 };
+
+/**
+ * Toggles image smoothening in the window
+ * @param {Boolean} x 
+ */
+const enableImageSmoothing = (x) => {
+  ctx.imageSmoothingEnabled = x;
+}
 
 const begin_draw = () => {
   ctx.beginPath();
@@ -115,6 +125,15 @@ const line_rect = (x, y, width, height, color, thickness) => {
 };
 
 /**
+ * Creates an image object for drawing use
+ * @param {String} image_object
+ */
+const PolyImage = (image_id) => {
+  let img = document.getElementById(image_id);
+  return img;
+};
+
+/**
  * Draws an image on screen
  * @param {Object} img
  * @param {Number} x
@@ -124,6 +143,15 @@ const draw_image = (img, x, y, w, h) => {
   ctx.drawImage(img, x, y, w, h);
 };
 
+/**
+ * Draws an image rotated by a specific radian angle
+ * @param {Object} img
+ * @param {Number} x
+ * @param {Number} y
+ * @param {Number} w
+ * @param {Number} h
+ * @param {Number} angle
+ */
 const rotated_image = (img, x, y, w, h, angle) => {
   ctx.translate(w / 2 + x, h / 2 + y);
   ctx.rotate(angle);
@@ -193,10 +221,10 @@ const loop_function = (func_name, delay) => {
 
 let keys = {};
 
-document.addEventListener("keydown", function (event) {
+document.addEventListener('keydown', function (event) {
   keys[event.key] = true;
 });
 
-document.addEventListener("keyup", function (event) {
+document.addEventListener('keyup', function (event) {
   keys[event.key] = false;
 });

@@ -12,9 +12,6 @@ body {
     top: 0;
     bottom: 25%;
     height: 70%;
-
-    image-rendering: pixelated;
-    background-color: black;
 }
 
 .box {
